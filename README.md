@@ -5,32 +5,19 @@ This project can be used as a starter for a webapp built with CodeIgniter 3.1.
 This starter builds on [CodeIgniter3.1-starter3](https://github.com/jedi-academy/CodeIgniter3.1-starter3),
 adding an entity model and enhancing the collection models to use it.
 
-This starter adds a rich persistent data abstraction, initially in the form
-of the CSV_Model.
+**controllers/Welcome.php** has been modified to set the name of the desired
+view file as a *data* parameter, and to then invoke the inherited *render*
+method to trigger presentation.
 
-An example, using menu items at a fast food place...
+A view template is provided. The CSS has been extracted to an appropriate file
+in the public folder. Styling could be improved by using a CSS framework, like
+Bootstrap.
 
-`data/menuitems.csv`:
+The **application/config/autoload.php** configuration has been modified
+to preload the template parser library and the url helper.
 
-    id,name,category,price
-    BM,Big Mac,entree,5.25
-    MF,Medium fried,side,2.00
-    LF,Large fries,side,3.00
+Sessions have been enabled in this starter, using `/tmp` as the folder to store them in.
 
-`application/models/themenu.php`:
+Configure your web server or virtual host so that your project's
+document root maps to this **public** folder inside your project.
 
-    class Themenu extends CSV_Model {
-      function __construct() {
-        parent::__construct('../data/menuitems.csv','id');
-      }
-    }
-
-Usage inside some controller, taking advantage of the DataMapper interface
-implemented by the CSV_Model...
-
-    $this->load->model('themenu;);
-    $all_the_items = $this->themenu->all();
-    ...
-    // get all of the entrees
-    $subset = $this->themenu->where('category','entree');
-    ...
